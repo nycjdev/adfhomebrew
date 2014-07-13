@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <af:document title="graph.jsf" id="d1">
+        <af:form id="f1">
+            <af:panelBox text="DiGraph" id="pb2">
+                <f:facet name="toolbar"/>
+                <dvt:diagram id="dvt1" summary="Example Diagram" layout="circleLayout"
+                             partialTriggers="generate dvt1 traverse">
+                    <dvt:clientLayout name="circleLayout" method="DemoCircleLayout.circleLayout"
+                                      featureName="DemoCircleLayout"/>
+                    <dvt:diagramNodes id="dns1" value="#{DiagramDataModel.nodes}" var="node">
+                        <dvt:diagramNode id="dn1" nodeId="#{node.vertex}" label="#{node.vertex}">
+                            <f:facet name="zoom100">
+                                <dvt:marker shape="#{node.vertex == DiagramDataModel.currentNode.vertex ? 'square':'circle'}"
+                                            height="20" width="20" fillColor="#{node.vertex == DiagramDataModel.currentNode.vertex ? '#00BFFF':'#ff0000'}" borderColor="#000000"
+                                            borderStyle="solid" borderWidth="1.0" id="m1"/>
+                            </f:facet>
+                        </dvt:diagramNode>
+                    </dvt:diagramNodes>
+                    <dvt:diagramLinks id="dls1" value="#{DiagramDataModel.links}" var="link">
+                        <dvt:diagramLink id="dl1" startNode="#{link.from.vertex}" endNode="#{link.to.vertex}"
+                                         startConnectorType="circle" endConnectorType="arrowOpen"/>
+                    </dvt:diagramLinks>
+                </dvt:diagram>
+                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                    <af:inputText label="max # of nodes" id="it1" binding="#{DiagramDataModel.numofnodesInput}"
+                                  value="10">
+                        <af:convertNumber type="number" integerOnly="true"/>
+                    </af:inputText>
+                    <af:button text="Generate" id="generate" actionListener="#{DiagramDataModel.generate}"
+                               partialSubmit="true" immediate="true"/>
+                    
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl2" layout="horizontal">
+                    <af:inputText label="Select" id="it2" binding="#{DiagramDataModel.selectInput}">
+                        <af:convertNumber type="number" integerOnly="true"/>
+                    </af:inputText>
+                    <af:button text="Traverse" id="traverse" actionListener="#{DiagramDataModel.traverse}"
+                               immediate="false" partialSubmit="true"/>
+                </af:panelGroupLayout>
+            </af:panelBox>
+        </af:form>
+    </af:document>
+</f:view>
