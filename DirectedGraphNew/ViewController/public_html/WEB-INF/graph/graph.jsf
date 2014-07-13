@@ -32,7 +32,7 @@
                     <af:button text="Generate" id="generate" actionListener="#{DiagramDataModel.generate}"
                                partialSubmit="true" immediate="true"/>
                     <af:button text="Traverse" id="traverse" actionListener="#{DiagramDataModel.simpleTraverse}"
-                               immediate="false" partialSubmit="false"/>
+                               immediate="false" partialSubmit="true"/>
                     
                 </af:panelGroupLayout>
             </af:panelBox>

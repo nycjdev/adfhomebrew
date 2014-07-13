@@ -3,18 +3,18 @@
    <OverallProperties
       id="OverallProperties1"/>
    <View
-      id="View2">
+      id="View3">
       <property
-         name="activityId">graph</property>
+         name="activityId">graph2</property>
       <property
-         name="page">/WEB-INF/graph/graph.jsf</property>
+         name="page">/WEB-INF/graph/graph2.jsf</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>graph&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>graph2&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">345.29883</property>
+         name="y">320.79883</property>
       <property
-         name="x">281.0</property>
+         name="x">250.5</property>
    </View>
 </SDM>
