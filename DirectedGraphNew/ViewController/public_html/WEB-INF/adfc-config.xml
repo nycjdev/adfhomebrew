@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="graph">
+    <page>/WEB-INF/graph/graph.jsf</page>
+  </view>
+  <managed-bean id="__1">
+    <managed-bean-name>GraphBean</managed-bean-name>
+    <managed-bean-class>com.adfhomebrew.view.graph.GraphBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__2">
+    <managed-bean-name>DiagramDataModel</managed-bean-name>
+    <managed-bean-class>com.adfhomebrew.view.graph.DiagramDataModel</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__3">
+    <managed-bean-name>TestGraphModel</managed-bean-name>
+    <managed-bean-class>com.adfhomebrew.view.test.TestGraphModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>
