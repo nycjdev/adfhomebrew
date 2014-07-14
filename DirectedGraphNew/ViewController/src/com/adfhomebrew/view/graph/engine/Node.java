@@ -1,4 +1,5 @@
 package com.adfhomebrew.view.graph.engine;
+
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -6,7 +7,7 @@ import java.util.TreeSet;
 public class Node implements Comparable {
 
     public int vertex;
-    
+
     public Node(int vertex) {
         this.vertex = vertex;
         inEdges = new TreeSet<Edge>(new EdgeFromComparator());
@@ -38,12 +39,11 @@ public class Node implements Comparable {
     }
 
     public Node getNodeBySelect(int select, TreeSet edges, boolean foward) {
-        
-        
-        
+
+
         if (foward) {
-            for (Iterator iter = edges.iterator(); iter.hasNext(); ) {
-                Edge edge = (Edge)iter.next();
+            for (Iterator iter = edges.iterator(); iter.hasNext();) {
+                Edge edge = (Edge) iter.next();
 
                 Node toNode = edge.to;
 
@@ -51,9 +51,9 @@ public class Node implements Comparable {
                     return toNode; // found the selected node, return it;
                 }
             }
-        }else{
-            for (Iterator iter = edges.iterator(); iter.hasNext(); ) {
-                Edge edge = (Edge)iter.next();
+        } else {
+            for (Iterator iter = edges.iterator(); iter.hasNext();) {
+                Edge edge = (Edge) iter.next();
 
                 Node toNode = edge.from;
 
@@ -78,7 +78,7 @@ public class Node implements Comparable {
         printEdges(iter);
     }
 
-  
+
     public Edge nextOutEdge() {
         if (outEdges.isEmpty()) {
             return null;
@@ -106,11 +106,11 @@ public class Node implements Comparable {
         return true;
     }
 
-    public Node addEdge(Node node) {
+    public Edge addEdge(Node node) {
         return addEdge(node, node.vertex, this.vertex);
     }
 
-    public Node addEdge(Node node, int forwardSelect) { //forward only
+    public Edge addEdge(Node node, int forwardSelect) { //forward only
 
         if (node.vertex < this.vertex) {
             return null; //temp direction check
@@ -120,22 +120,22 @@ public class Node implements Comparable {
         outEdges.add(e);
         node.inEdges.add(e);
 
-        return this;
+        return e;
     }
 
-    public Node addEdge(Node node, int forwardSelect, int backwardSelect) { // bidirectional
+    public Edge addEdge(Node node, int forwardSelect, int backwardSelect) { // bidirectional
 
         Edge e = new Edge(this, node, forwardSelect, backwardSelect);
         outEdges.add(e);
         node.inEdges.add(e);
 
-        return this;
+        return e;
     }
 
 
     public int compareTo(Object o) {
         if (o instanceof Node) {
-            Integer.valueOf(vertex).compareTo(Integer.valueOf(((Node)o).vertex));
+            Integer.valueOf(vertex).compareTo(Integer.valueOf(((Node) o).vertex));
         }
         return 0;
     }
@@ -156,7 +156,7 @@ public class Node implements Comparable {
     public String toString() {
         return Integer.toString(vertex);
     }
-    
+
     public void setVertex(int vertex) {
         this.vertex = vertex;
     }
@@ -164,7 +164,7 @@ public class Node implements Comparable {
     public int getVertex() {
         return vertex;
     }
-    
+
     public int getUniqueNodeId() {
         System.out.println("getting getUniqueNodeId");
         return vertex;

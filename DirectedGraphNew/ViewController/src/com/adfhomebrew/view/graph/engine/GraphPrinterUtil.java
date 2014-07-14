@@ -9,7 +9,7 @@ import java.util.Stack;
 
 
 public class GraphPrinterUtil {
-    /*
+    
     public static void printCurrentPath(Stack currentPathStack){
         System.out.print("Printing current path: ");
         
@@ -97,6 +97,6 @@ public class GraphPrinterUtil {
         Node nextVisitNode = node.nextOutEdge().to;
         printRootNode(nextVisitNode, dfsStack);
     }
-*/
+
 
 }

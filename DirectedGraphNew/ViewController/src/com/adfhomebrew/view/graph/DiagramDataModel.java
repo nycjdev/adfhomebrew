@@ -3,6 +3,7 @@ package com.adfhomebrew.view.graph;
 import com.adfhomebrew.view.graph.engine.Edge;
 import com.adfhomebrew.view.graph.engine.GoogleGraphUtil;
 import com.adfhomebrew.view.graph.engine.Graph;
+import com.adfhomebrew.view.graph.engine.GraphPrinterUtil;
 import com.adfhomebrew.view.graph.engine.Node;
 
 import java.util.ArrayList;
@@ -40,43 +41,34 @@ public class DiagramDataModel {
     private RichInputText numofnodesInput;
     private Graph _graph;
     private Node _currentNode;
+    private boolean[][] dagAdjacencyArray;
 
     private RichSelectOneChoice fowardListComp;
-    private RichSelectOneChoice backListComp;
 
-    
+
     private List forwardList;
-    private List backwardList;
     private UISelectItems forwardListSelectedItem;
 
     public DiagramDataModel() {
         numofnodesInput = new RichInputText();
         numofnodesInput.setSubmittedValue("10");
         fowardListComp = new RichSelectOneChoice();
-        backListComp=new RichSelectOneChoice();
-        forwardListSelectedItem=new UISelectItems();
-        
+        forwardListSelectedItem = new UISelectItems();
+
     }
-    
+
     public void setFowardListComp(RichSelectOneChoice fowardListComp) {
         this.fowardListComp = fowardListComp;
     }
-
-    public void setBackListComp(RichSelectOneChoice backListComp) {
-        this.backListComp = backListComp;
-    }
-
 
     public void reset() {
         _nodes.clear();
         _links.clear();
         _graph = null;
         _currentNode = null;
-        if(fowardListComp!=null)
-        fowardListComp.resetValue();
-        
-        if(backListComp!=null)
-        backListComp.resetValue();
+        if (fowardListComp != null)
+            fowardListComp.resetValue();
+
     }
 
     public void simpleTraverse() {
@@ -102,15 +94,15 @@ public class DiagramDataModel {
             updateNextMove();
         }
     }
-    
-    public void traverse(){
+
+    public void traverse() {
         Integer selectIndex = Integer.parseInt((fowardListComp.getValue()).toString());
         //System.out.println("Select index: "+select);
-        javax.faces.model.SelectItem selectItem = (javax.faces.model.SelectItem)forwardList.get(selectIndex-1);
-        System.out.println(" value: "+selectItem.getValue());
-        Node selectNode= (Node)selectItem.getValue();
-        int select=selectNode.vertex;
-        
+        javax.faces.model.SelectItem selectItem = (javax.faces.model.SelectItem) forwardList.get(selectIndex - 1);
+        System.out.println(" value: " + selectItem.getValue());
+        Node selectNode = (Node) selectItem.getValue();
+        int select = selectNode.vertex;
+
         Node nextNode = null;
 
         if (select > _currentNode.vertex) {
@@ -119,19 +111,17 @@ public class DiagramDataModel {
         } else {
             nextNode = _currentNode; //use self if invalid or equal input.
         }
-        _currentNode=nextNode;
+        _currentNode = nextNode;
 
     }
-    
+
     public void updateNextMove() {
         forwardList = new ArrayList();
-        backwardList = new ArrayList();
-        
         //if there are no outedges, then terminiate program.
         if (_currentNode == null || _currentNode.outEdges.isEmpty()) {
             return;
         }
-        
+
         System.out.println("\nCurrent node: " + _currentNode.vertex);
         System.out.println("possible foward nodes choices: ");
 
@@ -143,25 +133,17 @@ public class DiagramDataModel {
         }
 
         System.out.println("\npossible backward choices: ");
-        
-        for (Iterator iter = _currentNode.inEdges.iterator(); iter.hasNext();) {
-            Edge inSelect = (Edge) iter.next();
-            backwardList.add(new SelectItem(inSelect.to));
-            System.out.println(inSelect + ", ");
-        }
-        
 
-       
+
     }
 
-    public void initEdges(Node node, Graph g) {
+    public void initEdges(Node node, Graph g, boolean addLinks) {
         ArrayList adjacentList = new ArrayList();
         g.buildAdjacencyMatrix(node, adjacentList, new Stack());
 
         int size = adjacentList.size();
 
-        boolean[][] dagAdjacencyArray = new boolean[size][size];
-
+        dagAdjacencyArray = new boolean[size][size];
 
         initAdjacencyArray(dagAdjacencyArray);
 
@@ -178,7 +160,52 @@ public class DiagramDataModel {
                 int to = toNode.vertex;
 
                 dagAdjacencyArray[from][to] = true;
-                _links.add(outEdge);
+                if (addLinks) {
+                    _links.add(outEdge);
+                }
+            }
+        }
+
+        //GraphPrinterUtil.printAdjacencyArray(dagAdjacencyArray);
+    }
+
+    public void addRandomEdges() {
+
+        GraphPrinterUtil.printAdjacencyArray(dagAdjacencyArray);
+
+        for (int i = 0; i < dagAdjacencyArray.length; i++) {
+            for (int j = 0; j < dagAdjacencyArray.length; j++) {
+                boolean randomBool = randInt(0, 1) == 0 ? false : true;
+
+                //dont connect the last
+                //dont connect self
+                //don go back
+                if ((i == dagAdjacencyArray.length - 1 && j == 0) || i == j || j < i) {
+                    //sequential node
+                    System.out.println("i: " + i + " j: " + j + "break");
+
+                } else if (randomBool) {
+                    System.out.println("i: " + i + " j: " + j + "true");
+                    dagAdjacencyArray[i][j] = randomBool;
+                }
+
+
+            }
+        }
+        addEdges();
+        //GraphPrinterUtil.printAdjacencyArray(dagAdjacencyArray);
+    }
+
+    public void addEdges() {
+        //add edge
+        for (int i = 0; i < dagAdjacencyArray.length; i++) {
+            for (int j = 0; j < dagAdjacencyArray.length; j++) {
+                if (dagAdjacencyArray[i][j]) {
+                    Node fromNode = _nodes.get(i);
+                    Node toNode = _nodes.get(j);
+                    
+                    _links.add(fromNode.addEdge(toNode));
+                }
             }
         }
     }
@@ -200,7 +227,8 @@ public class DiagramDataModel {
 
     public List<Node> getNodes() {
         if (_nodes == null) {
-            genGraphHelper();
+            //genGraphHelper();
+            genRandomGraphHelper();
         }
         return _nodes;
     }
@@ -220,7 +248,8 @@ public class DiagramDataModel {
     }
 
     public void generate(ActionEvent actionEvent) {
-        genGraphHelper();
+        //genGraphHelper();
+        genRandomGraphHelper();
     }
 
 
@@ -241,7 +270,33 @@ public class DiagramDataModel {
             }
             _graph = new Graph(_nodes.get(0));
             _graph.connetNodes(_nodes);
-            initEdges(_graph.rootNode, _graph);
+            initEdges(_graph.rootNode, _graph, true);
+            return _graph;
+        }
+        return null;
+    }
+
+    public Graph genRandomGraphHelper() {
+        _nodes = new ArrayList();
+        _links = new ArrayList();
+
+        reset();
+
+        if (numofnodesInput != null && numofnodesInput.getValue() != null) {
+            Long total = Long.parseLong((String) numofnodesInput.getSubmittedValue());
+
+            int randomMax = randInt(2, total.intValue());
+
+            for (int i = 0; i < randomMax; i++) {
+                Node node = new Node(i);
+                _nodes.add(node);
+            }
+            _graph = new Graph(_nodes.get(0));
+            //connect sequential nodes.
+            _graph.connetNodes(_nodes);
+            initEdges(_graph.rootNode, _graph, false); //dont add links because addRandomEduges will do it
+
+            addRandomEdges();
             return _graph;
         }
         return null;
@@ -252,30 +307,18 @@ public class DiagramDataModel {
     }
 
 
-
     public Node getCurrentNode() {
         return _currentNode;
-    }  
+    }
 
     public List getForwardList() {
         return forwardList;
     }
 
-    public List getBackwardList() {
-        return backwardList;
-    }
-
-
-
     public RichSelectOneChoice getFowardListComp() {
         return fowardListComp;
     }
 
-
-
-    public RichSelectOneChoice getBackListComp() {
-        return backListComp;
-    }
 
     public void resetAction(ActionEvent actionEvent) {
         reset();
