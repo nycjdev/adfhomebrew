@@ -36,8 +36,9 @@
                 <af:panelGroupLayout id="pgl2" layout="horizontal">
                     <af:panelGroupLayout id="pgl3">
                         <af:selectOneChoice label="Forward" id="smc1" partialTriggers="traverse"
-                                             binding="#{DiagramDataModel.fowardListComp}" required="false">
-                            <f:selectItems value="#{DiagramDataModel.forwardList}" id="si1" var="list"
+                                             binding="#{DiagramDataModel.fowardListComp}" required="false"
+                                            autoSubmit="true">
+                            <f:selectItems value="#{DiagramDataModel.fowardList}" id="si1" var="list"
                                            itemValue="list.to" binding="#{DiagramDataModel.forwardListSelectedItem}"/>
                         </af:selectOneChoice>
                        

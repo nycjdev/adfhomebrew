@@ -1,10 +1,12 @@
 package com.adfhomebrew.view.graph.engine;
 
+import java.io.Serializable;
+
 import java.util.Iterator;
 import java.util.TreeSet;
 
 
-public class Node implements Comparable {
+public class Node implements Comparable, Serializable {
 
     public int vertex;
 

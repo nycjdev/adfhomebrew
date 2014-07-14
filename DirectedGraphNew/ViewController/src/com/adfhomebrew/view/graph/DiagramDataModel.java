@@ -15,12 +15,14 @@ import java.util.Stack;
 import java.util.TreeSet;
 
 import javax.faces.application.ViewHandler;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import oracle.adf.view.rich.component.rich.data.RichTable;
@@ -42,11 +44,10 @@ public class DiagramDataModel {
     private Graph _graph;
     private Node _currentNode;
     private boolean[][] dagAdjacencyArray;
-
     private RichSelectOneChoice fowardListComp;
 
 
-    private List forwardList;
+    private List fowardList;
     private UISelectItems forwardListSelectedItem;
 
     public DiagramDataModel() {
@@ -90,50 +91,25 @@ public class DiagramDataModel {
             _currentNode = _graph.rootNode;
             updateNextMove();
         } else {
-            traverse();
+            _currentNode = _nodes.get(Integer.parseInt((String) fowardListComp.getValue())); //can also do DFS
             updateNextMove();
         }
     }
 
-    public void traverse() {
-        Integer selectIndex = Integer.parseInt((fowardListComp.getValue()).toString());
-        //System.out.println("Select index: "+select);
-        javax.faces.model.SelectItem selectItem = (javax.faces.model.SelectItem) forwardList.get(selectIndex - 1);
-        System.out.println(" value: " + selectItem.getValue());
-        Node selectNode = (Node) selectItem.getValue();
-        int select = selectNode.vertex;
-
-        Node nextNode = null;
-
-        if (select > _currentNode.vertex) {
-            System.out.println("stepping foward...");
-            nextNode = _currentNode.getNodeBySelect(select, _currentNode.outEdges, true);
-        } else {
-            nextNode = _currentNode; //use self if invalid or equal input.
-        }
-        _currentNode = nextNode;
-
-    }
 
     public void updateNextMove() {
-        forwardList = new ArrayList();
+        fowardList = new ArrayList();
         //if there are no outedges, then terminiate program.
         if (_currentNode == null || _currentNode.outEdges.isEmpty()) {
             return;
         }
 
-        System.out.println("\nCurrent node: " + _currentNode.vertex);
-        System.out.println("possible foward nodes choices: ");
-
-
         for (Iterator iter = _currentNode.outEdges.iterator(); iter.hasNext();) {
             Edge outSelect = (Edge) iter.next();
-            forwardList.add(new SelectItem(outSelect.to));
-            System.out.print(outSelect + ", ");
+            fowardList.add(new SelectItem(Integer.toString(outSelect.to.vertex),
+                                          Integer.toString(outSelect.to.vertex)));
+
         }
-
-        System.out.println("\npossible backward choices: ");
-
 
     }
 
@@ -171,7 +147,7 @@ public class DiagramDataModel {
 
     public void addRandomEdges() {
 
-        GraphPrinterUtil.printAdjacencyArray(dagAdjacencyArray);
+        //GraphPrinterUtil.printAdjacencyArray(dagAdjacencyArray);
 
         for (int i = 0; i < dagAdjacencyArray.length; i++) {
             for (int j = 0; j < dagAdjacencyArray.length; j++) {
@@ -182,10 +158,17 @@ public class DiagramDataModel {
                 //don go back
                 if ((i == dagAdjacencyArray.length - 1 && j == 0) || i == j || j < i) {
                     //sequential node
-                    System.out.println("i: " + i + " j: " + j + "break");
+
+
+
+
+
+
+
+
+
 
                 } else if (randomBool) {
-                    System.out.println("i: " + i + " j: " + j + "true");
                     dagAdjacencyArray[i][j] = randomBool;
                 }
 
@@ -203,7 +186,7 @@ public class DiagramDataModel {
                 if (dagAdjacencyArray[i][j]) {
                     Node fromNode = _nodes.get(i);
                     Node toNode = _nodes.get(j);
-                    
+
                     _links.add(fromNode.addEdge(toNode));
                 }
             }
@@ -216,40 +199,6 @@ public class DiagramDataModel {
                 dagAdjacencyArray[i][j] = false;
             }
         }
-    }
-
-    private int randInt(int min, int max) {
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
-
-    public List<Node> getNodes() {
-        if (_nodes == null) {
-            //genGraphHelper();
-            genRandomGraphHelper();
-        }
-        return _nodes;
-    }
-
-
-    public List<Edge> getLinks() {
-        return _links;
-    }
-
-
-    public void setNumofnodesInput(RichInputText numofnodesInput) {
-        this.numofnodesInput = numofnodesInput;
-    }
-
-    public RichInputText getNumofnodesInput() {
-        return numofnodesInput;
-    }
-
-    public void generate(ActionEvent actionEvent) {
-        //genGraphHelper();
-        genRandomGraphHelper();
     }
 
 
@@ -302,6 +251,41 @@ public class DiagramDataModel {
         return null;
     }
 
+    private int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
+
+
+    public List<Node> getNodes() {
+        if (_nodes == null) {
+            //genGraphHelper();
+            genRandomGraphHelper();
+        }
+        return _nodes;
+    }
+
+
+    public List<Edge> getLinks() {
+        return _links;
+    }
+
+
+    public void setNumofnodesInput(RichInputText numofnodesInput) {
+        this.numofnodesInput = numofnodesInput;
+    }
+
+    public RichInputText getNumofnodesInput() {
+        return numofnodesInput;
+    }
+
+    public void generate(ActionEvent actionEvent) {
+        //genGraphHelper();
+        genRandomGraphHelper();
+    }
+
+
     public void simpleTraverse(ActionEvent actionEvent) {
         simpleTraverse();
     }
@@ -311,8 +295,8 @@ public class DiagramDataModel {
         return _currentNode;
     }
 
-    public List getForwardList() {
-        return forwardList;
+    public List getFowardList() {
+        return fowardList;
     }
 
     public RichSelectOneChoice getFowardListComp() {
@@ -332,4 +316,6 @@ public class DiagramDataModel {
     public UISelectItems getForwardListSelectedItem() {
         return forwardListSelectedItem;
     }
+
+
 }
