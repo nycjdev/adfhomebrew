@@ -2,6 +2,11 @@
 <jws:workspace xmlns:jws="http://xmlns.oracle.com/ide/project">
    <hash n="adrs-workspace-properties">
       <value n="adrs-instance-binding" v="DefaultServer"/>
+      <value n="deploy-timeout" v="0"/>
+      <value n="runtime-application-name" v="DirectedGraph"/>
+   </hash>
+   <hash n="adrs-workspace-weblogic-properties">
+      <value n="hot-class-reload" v="fast-swap"/>
    </hash>
    <value n="application-package-prefix" v="adfhomebrew"/>
    <value n="appTemplateId" v="adfWebappApplicationTemplate"/>

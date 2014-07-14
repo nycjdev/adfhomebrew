@@ -7,7 +7,7 @@
             <af:panelBox text="DiGraph" id="pb2">
                 <f:facet name="toolbar"/>
                 <dvt:diagram id="dvt1" summary="Example Diagram" layout="circleLayout"
-                             partialTriggers="generate dvt1 traverse">
+                             partialTriggers="generate dvt1 traverse reset">
                     <dvt:clientLayout name="circleLayout" method="DemoCircleLayout.circleLayout"
                                       featureName="DemoCircleLayout"/>
                     <dvt:diagramNodes id="dns1" value="#{DiagramDataModel.nodes}" var="node">
@@ -31,12 +31,17 @@
                     </af:inputText>
                     <af:button text="Generate" id="generate" actionListener="#{DiagramDataModel.generate}"
                                partialSubmit="true" immediate="true"/>
-                    
+                    <af:button text="Reset" id="reset" actionListener="#{DiagramDataModel.resetAction}"/>
                 </af:panelGroupLayout>
                 <af:panelGroupLayout id="pgl2" layout="horizontal">
-                    <af:inputText label="Select" id="it2" binding="#{DiagramDataModel.selectInput}">
-                        <af:convertNumber type="number" integerOnly="true"/>
-                    </af:inputText>
+                    <af:panelGroupLayout id="pgl3">
+                        <af:selectOneChoice label="Forward" id="smc1" partialTriggers="traverse"
+                                             binding="#{DiagramDataModel.fowardListComp}" required="false">
+                            <f:selectItems value="#{DiagramDataModel.forwardList}" id="si1" var="list"
+                                           itemValue="list.to" binding="#{DiagramDataModel.forwardListSelectedItem}"/>
+                        </af:selectOneChoice>
+                       
+                    </af:panelGroupLayout>
                     <af:button text="Traverse" id="traverse" actionListener="#{DiagramDataModel.traverse}"
                                immediate="false" partialSubmit="true"/>
                 </af:panelGroupLayout>

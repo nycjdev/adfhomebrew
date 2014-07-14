@@ -3,6 +3,9 @@ package com.adfhomebrew.view.graph.engine;
 public class Edge{
     public Node from;
     public Node to;
+    public int fowardSelect;
+    public int backwardSelect;
+    
 
     public void setFrom(Node from) {
         this.from = from;
@@ -19,8 +22,15 @@ public class Edge{
     public Node getTo() {
         return to;
     }
-    public int fowardSelect;
-    public int backwardSelect;
+
+    public int getFowardSelect() {
+        return fowardSelect;
+    }
+
+    public int getBackwardSelect() {
+        return backwardSelect;
+    }
+
 
 
     public Edge(Node from, Node to, int foward_select) {
