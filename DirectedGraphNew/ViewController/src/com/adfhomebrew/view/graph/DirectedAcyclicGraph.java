@@ -47,7 +47,6 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
         fowardListComp = new RichSelectOneChoice();
     }
 
-
     public void traverse(ActionEvent actionEvent) {
 
         if (_currentNode == null) {
@@ -74,6 +73,7 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
             fowardList.add(new SelectItem(Integer.toString(outSelect.to.vertex),
                                           Integer.toString(outSelect.to.vertex)));
         }
+
     }
 
     public void initRandomEdges() {
@@ -81,11 +81,11 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
             for (int j = 0; j < dagAdjacencyArray.length; j++) {
                 boolean randomBool = randInt(0, 1) == 0 ? false : true;
 
-                //dont connect the last
-                //dont connect self
-                //don go back
                 if ((i == dagAdjacencyArray.length - 1 && j == 0) || i == j || j < i) {
 
+                    //dont connect last
+                    //dont connect self
+                    //don go back
                 } else if (randomBool) {
                     dagAdjacencyArray[i][j] = randomBool;
                 }
@@ -102,7 +102,7 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
 
         if (numofnodesInput != null && numofnodesInput.getValue() != null) {
 
-            int randomMax = randInt(2, Integer.parseInt((String)numofnodesInput.getSubmittedValue()));
+            int randomMax = randInt(2, Integer.parseInt((String) numofnodesInput.getSubmittedValue()));
 
             for (int i = 0; i < randomMax; i++) {
                 Node node = new Node(i);

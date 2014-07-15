@@ -4,7 +4,7 @@
         xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
     <af:document title="graph.jsf" id="d1">
         <af:form id="f1">
-            <af:panelBox text="DiGraph" id="pb2">
+            <af:panelBox text="Directed Acyclic Graph" id="pb2">
                 <f:facet name="toolbar"/>
                 <dvt:diagram id="dvt1" summary="Example Diagram" layout="circleLayout"
                              partialTriggers="generate dvt1 traverse reset">
@@ -39,7 +39,7 @@
                     <af:panelGroupLayout id="pgl2" layout="horizontal">
                         <af:selectOneChoice label="Next Node" id="smc1" partialTriggers="traverse generate"
                                             binding="#{DirectedAcyclicGraph.fowardListComp}" required="false"
-                                            autoSubmit="true">
+                                            autoSubmit="true" value="1">
                             <f:selectItems value="#{DirectedAcyclicGraph.fowardList}" id="si1" var="list"
                                            itemValue="list.to"/>
                         </af:selectOneChoice>

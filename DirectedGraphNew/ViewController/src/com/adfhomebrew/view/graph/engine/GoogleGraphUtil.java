@@ -1,11 +1,12 @@
 package com.adfhomebrew.view.graph.engine;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.TreeSet;
 
 public class GoogleGraphUtil {
-    /*
+
     public void createHtml(Node node, ArrayList all, Stack dfsStack) {
         dfsStack.push(node);
         node.visit();
@@ -16,8 +17,8 @@ public class GoogleGraphUtil {
         values[2] = "";
 
         values[0] =
-                "[{v:'" + Integer.toString(node.vertex) + "',f:'" + Integer.toString(node.vertex) + "<div style=\"color:red; font-style:italic\">Node</div>'" +
-                "},";
+            "[{v:'" + Integer.toString(node.vertex) + "',f:'" + Integer.toString(node.vertex) +
+            "<div style=\"color:red; font-style:italic\">Node</div>'" + "},";
 
         TreeSet inEdges = node.inEdges;
         //from each edge, get the from
@@ -65,12 +66,12 @@ public class GoogleGraphUtil {
         boolean[][] dagAdjacencyArray = new boolean[size][size];
         initAdjacencyArray(dagAdjacencyArray);
 
-        for (Iterator<Node> iter = adjacentList.iterator(); iter.hasNext(); ) {
+        for (Iterator<Node> iter = adjacentList.iterator(); iter.hasNext();) {
             Node listNode = iter.next();
             TreeSet outEdges = listNode.outEdges;
 
             int row = listNode.vertex;
-            for (Iterator<Edge> outEdgesIter = outEdges.iterator(); outEdgesIter.hasNext(); ) {
+            for (Iterator<Edge> outEdgesIter = outEdges.iterator(); outEdgesIter.hasNext();) {
                 int col = outEdgesIter.next().to.vertex;
                 dagAdjacencyArray[row - 1][col - 1] = true;
             }
@@ -106,5 +107,5 @@ public class GoogleGraphUtil {
         buff.append("}");
 
         return buff.toString();
-    }*/
+    }
 }
