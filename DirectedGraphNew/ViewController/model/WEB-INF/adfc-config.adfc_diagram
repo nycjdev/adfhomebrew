@@ -3,7 +3,7 @@
    <OverallProperties
       id="OverallProperties1"/>
    <View
-      id="View3">
+      id="View5">
       <property
          name="activityId">graph2</property>
       <property
@@ -13,8 +13,8 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">320.79883</property>
+         name="y">264.79883</property>
       <property
-         name="x">250.5</property>
+         name="x">-65.5</property>
    </View>
 </SDM>

@@ -3,19 +3,19 @@
   <view id="graph2">
     <page>/WEB-INF/graph/graph2.jsf</page>
   </view>
-  <managed-bean id="__1">
-    <managed-bean-name>GraphBean</managed-bean-name>
-    <managed-bean-class>com.adfhomebrew.view.graph.GraphBean</managed-bean-class>
-    <managed-bean-scope>request</managed-bean-scope>
-  </managed-bean>
   <managed-bean id="__2">
-    <managed-bean-name>DiagramDataModel</managed-bean-name>
-    <managed-bean-class>com.adfhomebrew.view.graph.DiagramDataModel</managed-bean-class>
+    <managed-bean-name>DirectedAcyclicGraph</managed-bean-name>
+    <managed-bean-class>com.adfhomebrew.view.graph.DirectedAcyclicGraph</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
   <managed-bean id="__3">
     <managed-bean-name>TestGraphModel</managed-bean-name>
     <managed-bean-class>com.adfhomebrew.view.test.TestGraphModel</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__4">
+    <managed-bean-name>SimpleRandomGraph</managed-bean-name>
+    <managed-bean-class>com.adfhomebrew.view.graph.SimpleRandomGraph</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
 </adfc-config>

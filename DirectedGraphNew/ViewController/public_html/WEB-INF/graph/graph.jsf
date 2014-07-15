@@ -10,30 +10,30 @@
                              partialTriggers="generate dvt1 traverse">
                     <dvt:clientLayout name="circleLayout" method="DemoCircleLayout.circleLayout"
                                       featureName="DemoCircleLayout"/>
-                    <dvt:diagramNodes id="dns1" value="#{DiagramDataModel.nodes}" var="node">
+                    <dvt:diagramNodes id="dns1" value="#{SimpleRandomGraph.nodes}" var="node">
                         <dvt:diagramNode id="dn1" nodeId="#{node.vertex}" label="#{node.vertex}">
                             <f:facet name="zoom100">
-                                <dvt:marker shape="#{node.vertex == DiagramDataModel.currentNode.vertex ? 'square':'circle'}"
-                                            height="20" width="20" fillColor="#{node.vertex == DiagramDataModel.currentNode.vertex ? '#00BFFF':'#ff0000'}" borderColor="#000000"
-                                            borderStyle="solid" borderWidth="1.0" id="m1"/>
+                                <dvt:marker shape="#{node.vertex == SimpleRandomGraph.currentNode.vertex ? 'square':'circle'}"
+                                            height="20" width="20"
+                                            fillColor="#{node.vertex == SimpleRandomGraph.currentNode.vertex ? '#00BFFF':'#ff0000'}"
+                                            borderColor="#000000" borderStyle="solid" borderWidth="1.0" id="m1"/>
                             </f:facet>
                         </dvt:diagramNode>
                     </dvt:diagramNodes>
-                    <dvt:diagramLinks id="dls1" value="#{DiagramDataModel.links}" var="link">
+                    <dvt:diagramLinks id="dls1" value="#{SimpleRandomGraph.links}" var="link">
                         <dvt:diagramLink id="dl1" startNode="#{link.from.vertex}" endNode="#{link.to.vertex}"
                                          startConnectorType="circle" endConnectorType="arrowOpen"/>
                     </dvt:diagramLinks>
                 </dvt:diagram>
                 <af:panelGroupLayout id="pgl1" layout="horizontal">
-                    <af:inputText label="max # of nodes" id="it1" binding="#{DiagramDataModel.numofnodesInput}"
+                    <af:inputText label="max # of nodes" id="it1" binding="#{SimpleRandomGraph.numofnodesInput}"
                                   value="10">
                         <af:convertNumber type="number" integerOnly="true"/>
                     </af:inputText>
-                    <af:button text="Generate" id="generate" actionListener="#{DiagramDataModel.generate}"
+                    <af:button text="Generate" id="generate" actionListener="#{SimpleRandomGraph.generate}"
                                partialSubmit="true" immediate="true"/>
-                    <af:button text="Traverse" id="traverse" actionListener="#{DiagramDataModel.simpleTraverse}"
+                    <af:button text="Traverse" id="traverse" actionListener="#{SimpleRandomGraph.traverse}"
                                immediate="false" partialSubmit="true"/>
-                    
                 </af:panelGroupLayout>
             </af:panelBox>
         </af:form>
