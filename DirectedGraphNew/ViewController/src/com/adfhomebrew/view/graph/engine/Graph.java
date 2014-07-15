@@ -18,7 +18,7 @@ public class Graph {
 
 
     public void printCurrentPath() {
-       // GraphPrinterUtil.printCurrentPath(currentPathStack);
+       GraphPrinterUtil.printCurrentPath(currentPathStack);
     }
 
     public void connetNodes(List<Node> allNodes) {
@@ -32,7 +32,6 @@ public class Graph {
 
 
     //used for visual graphing, see createGoogleGraphVizHtml in GoogleGraphUtil.
-    //problem with this code is if no edges are present, the adjacent matrix is not created.
     public void buildAdjacencyMatrix(Node node, ArrayList matrix, Stack dfsStack) {
 
         dfsStack.push(node);
