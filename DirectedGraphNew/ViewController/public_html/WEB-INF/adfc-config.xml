@@ -3,6 +3,9 @@
   <view id="graph2">
     <page>/WEB-INF/graph/graph2.jsf</page>
   </view>
+  <view id="graph">
+    <page>/WEB-INF/graph/graph.jsf</page>
+  </view>
   <managed-bean id="__2">
     <managed-bean-name>DirectedAcyclicGraph</managed-bean-name>
     <managed-bean-class>com.adfhomebrew.view.graph.DirectedAcyclicGraph</managed-bean-class>

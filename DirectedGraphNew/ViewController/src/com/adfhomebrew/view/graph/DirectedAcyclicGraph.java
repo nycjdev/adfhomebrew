@@ -1,46 +1,23 @@
 package com.adfhomebrew.view.graph;
 
 import com.adfhomebrew.view.graph.engine.Edge;
-import com.adfhomebrew.view.graph.engine.GoogleGraphUtil;
 import com.adfhomebrew.view.graph.engine.Graph;
-import com.adfhomebrew.view.graph.engine.GraphPrinterUtil;
+
 import com.adfhomebrew.view.graph.engine.Node;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-import java.util.Stack;
-import java.util.TreeSet;
 
-import javax.faces.application.ViewHandler;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UISelectItem;
-import javax.faces.component.UISelectItems;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import oracle.adf.view.rich.component.rich.data.RichTable;
-
-import oracle.adf.view.rich.component.rich.input.RichInputText;
-
-import oracle.adf.view.rich.component.rich.input.RichSelectItem;
-import oracle.adf.view.rich.component.rich.input.RichSelectManyChoice;
-
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
-
-import org.apache.myfaces.trinidad.model.CollectionModel;
-import org.apache.myfaces.trinidad.model.RowKeySet;
 
 public class DirectedAcyclicGraph extends SimpleRandomGraph {
 
     private RichSelectOneChoice fowardListComp;
-    private List fowardList;
+    private List<SelectItem> fowardList;
 
     public DirectedAcyclicGraph() {
         super("100");
@@ -48,18 +25,24 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
     }
 
     public void traverse(ActionEvent actionEvent) {
-
         if (_currentNode == null) {
             _currentNode = _graph.rootNode;
+            _graph.addToCurrentPath(_currentNode, null);
             updateNextMove();
         } else {
             String value = (String) fowardListComp.getValue();
+
             if (value != null) {
-                _currentNode = _nodes.get(Integer.parseInt(value)); //can also do DFS
+                //mark edge visited
+                int nextNodeIndex = Integer.parseInt(value);
+                Node toNode = _nodes.get(nextNodeIndex); //can also do DFS
+                _graph.addToCurrentPath(_currentNode, toNode);
+                _currentNode = toNode;
                 updateNextMove();
             }
         }
     }
+
 
     public void updateNextMove() {
         fowardList = new ArrayList();
@@ -123,8 +106,9 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
         if (_graph != null) {
             _currentNode = _graph.rootNode;
         }
-        if (fowardListComp != null) {
-            fowardListComp = new RichSelectOneChoice();
+        if (fowardList != null) {
+            fowardList = new <SelectItem>ArrayList();
+
         }
     }
 

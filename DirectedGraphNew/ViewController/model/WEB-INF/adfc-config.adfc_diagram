@@ -13,8 +13,23 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">-56.902344</property>
+         name="y">-223.46289</property>
       <property
-         name="x">-165.5</property>
+         name="x">-716.0</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">graph</property>
+      <property
+         name="page">/WEB-INF/graph/graph.jsf</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>graph&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-219.63232</property>
+      <property
+         name="x">-616.25</property>
    </View>
 </SDM>

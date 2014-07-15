@@ -5,11 +5,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+import java.util.TreeSet;
 
 public class Graph {
 
     public Node rootNode = null;
-    public Stack currentPathStack = new Stack();
+    public Stack<Node> currentPathStack = new Stack();
 
     public Graph(Node root) {
         //all connected
@@ -18,7 +19,7 @@ public class Graph {
 
 
     public void printCurrentPath() {
-       GraphPrinterUtil.printCurrentPath(currentPathStack);
+        //GraphPrinterUtil.printCurrentPath(currentPathStack);
     }
 
     public void connetNodes(List<Node> allNodes) {
@@ -29,7 +30,21 @@ public class Graph {
         }
     }
 
+    public void addToCurrentPath(Node fromNode, Node toNode) {
+        currentPathStack.push(fromNode);
+        
+        if (toNode != null) {
+            TreeSet outEdges = fromNode.getOutEdges();
 
+            //visit the edge for visual purposes.
+            for (Iterator<Edge> iter = outEdges.iterator(); iter.hasNext();) {
+                Edge edge = iter.next();
+                if (edge.from.equals(fromNode) && edge.to.equals(toNode)) {
+                    edge.setVisited(true);                    
+                }
+            }
+        }
+    }
 
     //used for visual graphing, see createGoogleGraphVizHtml in GoogleGraphUtil.
     public void buildAdjacencyMatrix(Node node, ArrayList matrix, Stack dfsStack) {

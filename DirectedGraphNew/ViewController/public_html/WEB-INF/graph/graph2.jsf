@@ -2,42 +2,53 @@
 <!DOCTYPE html>
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
         xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
-    <af:document title="graph.jsf" id="d1">
+    <af:document title="Directed Acyclic Graph  " id="d1">
         <af:form id="f1">
-            <af:panelBox text="Directed Acyclic Graph" id="pb2">
+            <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth">
+                <f:facet name="bottom"/>
+                <f:facet name="center">
+                    <dvt:diagram id="dvt1" summary="Example Diagram" layout="circleLayout"
+                                 partialTriggers="generate dvt1 traverse reset"  inlineStyle="height:600px;">
+                        <dvt:clientLayout name="circleLayout" method="DemoCircleLayout.circleLayout"
+                                          featureName="DemoCircleLayout"/>
+                        <dvt:diagramNodes id="dns1" value="#{DirectedAcyclicGraph.nodes}" var="node">
+                            <dvt:diagramNode id="dn1" nodeId="#{node.vertex}">
+                                <f:facet name="zoom100">
+                                    <dvt:marker shape="#{node.vertex == DirectedAcyclicGraph.currentNode.vertex ? 'square':'circle'}"
+                                                height="50" width="50" borderColor="#000000" borderStyle="solid"
+                                                borderWidth="1.0" id="m1" value="#{node.vertex}"
+                                                fillColor="#{node.vertex == DirectedAcyclicGraph.currentNode.vertex ? '#ff0000':'#f7f7f7'}"/>
+                                </f:facet>
+                            </dvt:diagramNode>
+                        </dvt:diagramNodes>
+                        <dvt:diagramLinks id="dls1" value="#{DirectedAcyclicGraph.links}" var="link">
+                            <dvt:diagramLink id="dl1" startNode="#{link.from.vertex}" endNode="#{link.to.vertex}"
+                                             startConnectorType="none" endConnectorType="arrowOpen"
+                                             label="#{link.fowardSelect}" linkWidth="#{link.visited==true ? 5 : 1}"
+                                             linkColor="#{link.visited == true ? '#ff0000' : '#e7e7e7'}"/>
+                        </dvt:diagramLinks>
+                    </dvt:diagram>
+                </f:facet>
+                <f:facet name="start"/>
+                <f:facet name="end"/>
+                <f:facet name="top"/>
+            </af:panelStretchLayout>
+            <af:panelHeader text="Controls" id="ph1">
+                <f:facet name="context"/>
+                <f:facet name="menuBar"/>
                 <f:facet name="toolbar"/>
-                <dvt:diagram id="dvt1" summary="Example Diagram" layout="circleLayout"
-                             partialTriggers="generate dvt1 traverse reset">
-                    <dvt:clientLayout name="circleLayout" method="DemoCircleLayout.circleLayout"
-                                      featureName="DemoCircleLayout"/>
-                    <dvt:diagramNodes id="dns1" value="#{DirectedAcyclicGraph.nodes}" var="node">
-                        <dvt:diagramNode id="dn1" nodeId="#{node.vertex}">
-                            <f:facet name="zoom100">
-                                <dvt:marker shape="#{node.vertex == DirectedAcyclicGraph.currentNode.vertex ? 'square':'circle'}"
-                                            height="50" width="50"
-                                            fillColor="#{node.vertex == DirectedAcyclicGraph.currentNode.vertex ? '#00BFFF':'#ff0000'}"
-                                            borderColor="#000000" borderStyle="solid" borderWidth="1.0" id="m1"
-                                            value="#{node.vertex}"/>
-                            </f:facet>
-                        </dvt:diagramNode>
-                    </dvt:diagramNodes>
-                    <dvt:diagramLinks id="dls1" value="#{DirectedAcyclicGraph.links}" var="link">
-                        <dvt:diagramLink id="dl1" startNode="#{link.from.vertex}" endNode="#{link.to.vertex}"
-                                         startConnectorType="none" endConnectorType="arrowOpen"
-                                         label="#{link.fowardSelect}" linkWidth="1"/>
-                    </dvt:diagramLinks>
-                </dvt:diagram>
-                <af:panelGroupLayout id="pgl1" layout="horizontal">
-                    <af:inputText label="max # of nodes" id="it1" binding="#{DirectedAcyclicGraph.numofnodesInput}"
-                                  value="100">
-                        <af:convertNumber type="number" integerOnly="true"/>
-                    </af:inputText>
-                    <af:button text="Generate" id="generate" actionListener="#{DirectedAcyclicGraph.generate}"
-                               partialSubmit="true" immediate="true"/>
-                    <af:button text="Reset" id="reset" actionListener="#{DirectedAcyclicGraph.resetAction}"/>
-                    <af:spacer width="10" height="10" id="s1"/>
+                <f:facet name="legend"/>
+                <f:facet name="info"/>
                     <af:panelGroupLayout id="pgl2" layout="horizontal">
-                        <af:selectOneChoice label="Next Node" id="smc1" partialTriggers="traverse generate"
+                        <af:inputText label="max # of nodes" id="it1" binding="#{DirectedAcyclicGraph.numofnodesInput}"
+                                      value="100">
+                            <af:convertNumber type="number" integerOnly="true"/>
+                        </af:inputText>
+                        <af:button text="Generate" id="generate" actionListener="#{DirectedAcyclicGraph.generate}"
+                                   partialSubmit="true" immediate="true"/>
+                        <af:button text="Reset" id="reset" actionListener="#{DirectedAcyclicGraph.resetAction}"/>
+                        <af:spacer width="10" height="10" id="s1"/>
+                        <af:selectOneChoice label="Next Node" id="smc1" partialTriggers="generate traverse reset"
                                             binding="#{DirectedAcyclicGraph.fowardListComp}" required="false"
                                             autoSubmit="true" value="1">
                             <f:selectItems value="#{DirectedAcyclicGraph.fowardList}" id="si1" var="list"
@@ -46,8 +57,7 @@
                         <af:button text="Traverse" id="traverse" actionListener="#{DirectedAcyclicGraph.traverse}"
                                    immediate="false" partialSubmit="true"/>
                     </af:panelGroupLayout>
-                </af:panelGroupLayout>
-            </af:panelBox>
+            </af:panelHeader>
         </af:form>
     </af:document>
 </f:view>

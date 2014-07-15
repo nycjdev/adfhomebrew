@@ -5,6 +5,7 @@ import com.adfhomebrew.view.graph.engine.Graph;
 import com.adfhomebrew.view.graph.engine.Node;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +20,8 @@ public class SimpleRandomGraph {
 
     protected List<Node> _nodes;
     protected List<Edge> _links;
+    protected List<Edge> vistedEdgesList;
+
     protected RichInputText numofnodesInput;
     protected Graph _graph;
     protected Node _currentNode;
@@ -120,6 +123,13 @@ public class SimpleRandomGraph {
     public void reset() {
         if (_graph != null) {
             _currentNode = _graph.rootNode;
+            _graph.currentPathStack = new <Node>Stack();
+            
+            for(Iterator <Edge>iter = _links.iterator(); iter.hasNext();){
+                Edge edge = iter.next();
+                edge.setVisited(false);
+            }
+            
         }
     }
 
