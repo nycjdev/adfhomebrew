@@ -8,7 +8,7 @@
                 <f:facet name="bottom"/>
                 <f:facet name="center">
                     <dvt:diagram id="dvt1" summary="Example Diagram" layout="circleLayout"
-                                 partialTriggers="generate dvt1 traverse reset"  inlineStyle="height:600px;">
+                                 partialTriggers="generate dvt1 traverse"  styleClass="AFStretchWidth" inlineStyle="height:800px;">
                         <dvt:clientLayout name="circleLayout" method="DemoCircleLayout.circleLayout"
                                           featureName="DemoCircleLayout"/>
                         <dvt:diagramNodes id="dns1" value="#{DirectedAcyclicGraph.nodes}" var="node">
@@ -41,14 +41,11 @@
                 <f:facet name="info"/>
                     <af:panelGroupLayout id="pgl2" layout="horizontal">
                         <af:inputText label="max # of nodes" id="it1" binding="#{DirectedAcyclicGraph.numofnodesInput}"
-                                      value="100">
-                            <af:convertNumber type="number" integerOnly="true"/>
-                        </af:inputText>
+                                      value="100"/>
                         <af:button text="Generate" id="generate" actionListener="#{DirectedAcyclicGraph.generate}"
                                    partialSubmit="true" immediate="true"/>
-                        <af:button text="Reset" id="reset" actionListener="#{DirectedAcyclicGraph.resetAction}"/>
                         <af:spacer width="10" height="10" id="s1"/>
-                        <af:selectOneChoice label="Next Node" id="smc1" partialTriggers="generate traverse reset"
+                        <af:selectOneChoice label="Next Node" id="smc1" partialTriggers="generate traverse"
                                             binding="#{DirectedAcyclicGraph.fowardListComp}" required="false"
                                             autoSubmit="true" value="1">
                             <f:selectItems value="#{DirectedAcyclicGraph.fowardList}" id="si1" var="list"

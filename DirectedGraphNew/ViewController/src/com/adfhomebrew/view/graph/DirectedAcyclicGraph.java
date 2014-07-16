@@ -30,12 +30,14 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
             _graph.addToCurrentPath(_currentNode, null);
             updateNextMove();
         } else {
+            
             String value = (String) fowardListComp.getValue();
 
             if (value != null) {
                 //mark edge visited
                 int nextNodeIndex = Integer.parseInt(value);
                 Node toNode = _nodes.get(nextNodeIndex); //can also do DFS
+   
                 _graph.addToCurrentPath(_currentNode, toNode);
                 _currentNode = toNode;
                 updateNextMove();
@@ -56,7 +58,6 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
             fowardList.add(new SelectItem(Integer.toString(outSelect.to.vertex),
                                           Integer.toString(outSelect.to.vertex)));
         }
-
     }
 
     public void initRandomEdges() {
@@ -77,7 +78,7 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
         addEdges();
     }
 
-    public Graph genAdvanceGraphHelper() {
+    public Graph initDagGraphHelper() {
         _nodes = new ArrayList();
         _links = new ArrayList();
 
@@ -108,19 +109,17 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
         }
         if (fowardList != null) {
             fowardList = new <SelectItem>ArrayList();
-
+            
         }
     }
 
     public void generate(ActionEvent actionEvent) {
-        this.genAdvanceGraphHelper();
+        this.initDagGraphHelper();
+        reset();
         updateNextMove();
     }
 
-    public void resetAction(ActionEvent actionEvent) {
-        reset();
-    }
-
+  
     public List getFowardList() {
         return fowardList;
     }
@@ -135,7 +134,8 @@ public class DirectedAcyclicGraph extends SimpleRandomGraph {
 
     public List<Node> getNodes() {
         if (_nodes == null) {
-            genAdvanceGraphHelper();
+            initDagGraphHelper();
+            updateNextMove();
         }
         return _nodes;
     }

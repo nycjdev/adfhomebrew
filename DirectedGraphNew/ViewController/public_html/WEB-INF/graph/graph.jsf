@@ -4,7 +4,7 @@
         xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
     <af:document title="graph.jsf" id="d1">
         <af:form id="f1">
-            <af:panelBox text="DiGraph" id="pb2">
+            <af:panelBox text="Simple Directed Acyclic Graph" id="pb2">
                 <f:facet name="toolbar"/>
                 <dvt:diagram id="dvt1" summary="Example Diagram" layout="circleLayout"
                              partialTriggers="generate dvt1 traverse">
@@ -27,9 +27,7 @@
                 </dvt:diagram>
                 <af:panelGroupLayout id="pgl1" layout="horizontal">
                     <af:inputText label="max # of nodes" id="it1" binding="#{SimpleRandomGraph.numofnodesInput}"
-                                  value="10">
-                        <af:convertNumber type="number" integerOnly="true"/>
-                    </af:inputText>
+                                  value="10"/>
                     <af:button text="Generate" id="generate" actionListener="#{SimpleRandomGraph.generate}"
                                partialSubmit="true" immediate="true"/>
                     <af:button text="Traverse" id="traverse" actionListener="#{SimpleRandomGraph.traverse}"

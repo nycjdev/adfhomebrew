@@ -31,17 +31,20 @@ public class Graph {
     }
 
     public void addToCurrentPath(Node fromNode, Node toNode) {
-        currentPathStack.push(fromNode);
         
+        currentPathStack.push(fromNode);
+
         if (toNode != null) {
             TreeSet outEdges = fromNode.getOutEdges();
 
             //visit the edge for visual purposes.
             for (Iterator<Edge> iter = outEdges.iterator(); iter.hasNext();) {
                 Edge edge = iter.next();
-                if (edge.from.equals(fromNode) && edge.to.equals(toNode)) {
-                    edge.setVisited(true);                    
-                }
+
+                if (edge.from.vertex == fromNode.vertex && edge.to.vertex == toNode.vertex) {
+                    
+                    edge.setVisited(true);
+                } 
             }
         }
     }

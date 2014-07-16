@@ -20,12 +20,11 @@ public class SimpleRandomGraph {
 
     protected List<Node> _nodes;
     protected List<Edge> _links;
-    protected List<Edge> vistedEdgesList;
-
-    protected RichInputText numofnodesInput;
+    protected List<Edge> vistedEdgesList;    
     protected Graph _graph;
     protected Node _currentNode;
     protected boolean[][] dagAdjacencyArray;
+    protected RichInputText numofnodesInput;
 
 
     public SimpleRandomGraph() {
@@ -90,7 +89,7 @@ public class SimpleRandomGraph {
         }
     }
 
-    public Graph genGraphHelper() {
+    public Graph initGraphHelper() {
         _nodes = new ArrayList();
         _links = new ArrayList();
 
@@ -105,7 +104,7 @@ public class SimpleRandomGraph {
                 Node node = new Node(i);
                 _nodes.add(node);
             }
-            System.out.println("generated graph");
+            
             _graph = new Graph(_nodes.get(0));
             _graph.connetNodes(_nodes);
             initEdges(_graph.rootNode, _graph, true);
@@ -122,7 +121,6 @@ public class SimpleRandomGraph {
 
     public void reset() {
         if (_graph != null) {
-            _currentNode = _graph.rootNode;
             _graph.currentPathStack = new <Node>Stack();
             
             for(Iterator <Edge>iter = _links.iterator(); iter.hasNext();){
@@ -138,7 +136,7 @@ public class SimpleRandomGraph {
 
     public List<Node> getNodes() {
         if (_nodes == null) {
-            genGraphHelper();
+            initGraphHelper();
         }
         return _nodes;
     }
@@ -148,7 +146,7 @@ public class SimpleRandomGraph {
     }
 
     public void generate(ActionEvent actionEvent) {
-        genGraphHelper();
+        initGraphHelper();
     }
 
     public Node getCurrentNode() {
@@ -162,7 +160,7 @@ public class SimpleRandomGraph {
             _currentNode = _graph.rootNode;
 
         }
-        _currentNode = (Node) _graph.currentPathStack.pop();
+        _currentNode =_graph.currentPathStack.pop();
         if (_currentNode.getOutEdges().iterator().hasNext()) {
             _graph.currentPathStack.push((_currentNode.getOutEdges().iterator().next()).to);
         }
